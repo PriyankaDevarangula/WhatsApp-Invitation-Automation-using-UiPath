@@ -1,0 +1,61 @@
+## 🛠️ Implementation Steps
+
+### 1. **Project Initialization**
+
+* **Launch UiPath Studio**: Open UiPath Studio on your system.
+* **Create a New Process**:
+
+  * Click on **"Process"** to start a new project.
+  * Name your project, e.g., `WhatsAppInvitationSender`.
+  * Provide a brief description, such as "Automates sending personalized WhatsApp invitations."
+  * Choose a location to save your project.
+  * Click **"Create"**.([UiPath Documentation][1])
+
+### 2. **Designing the Workflow**
+
+* **Set Up the Main Sequence**:
+
+  * In the **Project** panel, open `Main.xaml`.
+  * Drag a **Sequence** activity into the workspace.
+  * Rename it to `WhatsAppInvitationProcess`.([UiPath Documentation][1])
+
+* **Read Excel Data**:
+
+  * Use the **Excel Application Scope** activity to open your `contacts.xlsx` file.
+  * Within this scope, use the **Read Range** activity to read the contact data into a DataTable variable, e.g., `dtContacts`.
+
+* **Iterate Through Contacts**:
+
+  * Use a **For Each Row** activity to loop through `dtContacts`.
+  * Inside the loop, extract the `Name` and `PhoneNumber` for each contact.
+
+* **Open WhatsApp Web**:
+
+  * Use the **Open Browser** activity to navigate to `https://web.whatsapp.com/`.
+  * Ensure that the WhatsApp Web session is already authenticated.
+
+* **Send Messages and Attachments**:
+
+  * Within the browser scope, use **Type Into** activities to search for the contact using their phone number.
+  * Use **Click** activities to select the contact from the search results.
+  * Use another **Type Into** activity to enter the personalized message.
+  * Use the **Attach Window** or **Click** activities to click on the attachment icon and upload the invitation image.
+  * Use the **Send Hotkey** activity with the "Enter" key to send the message.
+
+### 3. **Exception Handling and Logging**
+
+* **Add Try-Catch Blocks**:
+
+  * Wrap the message-sending sequence within a **Try-Catch** activity to handle any exceptions.
+  * In the **Catch** block, use the **Log Message** activity to log errors for debugging purposes.
+
+### 4. **Testing the Workflow**
+
+* **Run the Workflow**:
+
+  * Click on the **Run** button to execute the workflow.
+  * Monitor the execution to ensure that messages are sent correctly to each contact.
+
+* **Validate Outputs**:
+
+  * Check WhatsApp Web to confirm that messages and attachments are delivered as expected.
